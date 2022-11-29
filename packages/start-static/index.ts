@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import common from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import nodeResolve from "@rollup/plugin-node-resolve";
@@ -7,14 +6,15 @@ import { copyFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { rollup } from "rollup";
 import renderStatic from "solid-ssr/static";
+import type { Adapter } from "solid-start/vite";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-export default function () {
+export default function (): Adapter {
   return {
     name: "static",
-    start(config, { port }) {
+    start(_config, { port }) {
       process.env.PORT = port;
       const proc = spawn("npx", ["serve", "./dist/public"]);
       proc.stdout.pipe(process.stdout);

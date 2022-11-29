@@ -1,7 +1,10 @@
+import type { VercelRequest } from "@vercel/node";
+// @ts-ignore
 import manifest from "../../.vercel/output/static/route-manifest.json";
+// @ts-ignore
 import entry from "./entry-server";
 
-export default function (request) {
+export default function (request: VercelRequest) {
   const response = entry({
     request,
     env: {

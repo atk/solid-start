@@ -1,14 +1,16 @@
 import "solid-start/node/globals.js";
+// @ts-ignore
 import manifest from "../../netlify/route-manifest.json";
+// @ts-ignore
 import handle from "./handler";
 
 Response.redirect = function (url, status = 302) {
-  let response = new Response(null, { status, headers: { Location: url }, counter: 1 });
+  let response = new Response(null, { status, headers: { Location: url.toString() }, counter: 1 } as unknown as ResponseInit);
 
   return response;
 };
 
-export const handler = async function (event, context) {
+export const handler = async function (event, _context) {
   console.log(`Received new request: ${event.path}`);
 
   const webRes = await handle({
@@ -46,7 +48,7 @@ function createRequest(event) {
     url = new URL(rawPath, `http://${origin}`);
   }
 
-  let init = {
+  let init: Partial<RequestInit> = {
     method: event.httpMethod,
     headers: createHeaders(event.multiValueHeaders)
   };
@@ -58,7 +60,7 @@ function createRequest(event) {
   return new Request(url.href, init);
 }
 
-function createHeaders(requestHeaders) {
+function createHeaders(requestHeaders: Headers | Record<string, string>) {
   let headers = new Headers();
 
   for (const [key, values] of Object.entries(requestHeaders)) {

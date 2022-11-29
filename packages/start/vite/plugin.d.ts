@@ -7,6 +7,7 @@ export type Options = {
   islandsRouter: boolean;
   prerenderRoutes: any[];
   inspect: boolean;
+  root?: string;
   rootEntry: string;
   serverEntry: string;
   clientEntry: string;

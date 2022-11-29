@@ -5,9 +5,10 @@ import { spawn } from "child_process";
 import { copyFileSync, existsSync, promises } from "fs";
 import { dirname, join } from "path";
 import { rollup } from "rollup";
+import type { Adapter } from "solid-start/vite";
 import { fileURLToPath } from "url";
 
-export default function ({ edge } = {}) {
+export default function ({ edge } = { edge: false}): Adapter {
   return {
     name: "netlify",
     start() {

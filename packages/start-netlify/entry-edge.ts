@@ -1,4 +1,6 @@
+// @ts-ignore
 import manifest from "../../netlify/route-manifest.json";
+// @ts-ignore
 import handler from "./handler";
 
 export default (request, context) =>

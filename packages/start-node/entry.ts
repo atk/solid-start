@@ -1,8 +1,10 @@
+import { createServer } from "packages/start-node/server.js";
 import { dirname, join } from "path";
-import { createServer } from "solid-start-node/server.js";
 import "solid-start/node/globals.js";
 import { fileURLToPath } from "url";
+// @ts-ignore
 import manifest from "../../dist/public/route-manifest.json";
+// @ts-ignore
 import handler from "./handler.js";
 
 const { PORT = 3000 } = process.env;
@@ -18,7 +20,7 @@ const server = createServer({
   env: { manifest },
 });
 
-server.listen(PORT, err => {
+server.listen(PORT, (err?: Error) => {
   if (err) {
     console.log("error", err);
   } else {

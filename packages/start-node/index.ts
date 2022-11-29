@@ -4,9 +4,10 @@ import nodeResolve from "@rollup/plugin-node-resolve";
 import { copyFileSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { rollup } from "rollup";
+import { Adapter } from "solid-start/vite";
 import { fileURLToPath, pathToFileURL } from "url";
 
-export default function () {
+export default function (): Adapter {
   return {
     name: "node",
     start(config, { port }) {

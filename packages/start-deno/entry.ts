@@ -1,8 +1,15 @@
+// @ts-ignore
 import { lookup } from "https://deno.land/x/media_types/mod.ts";
+// @ts-ignore
 import manifest from "../../dist/public/route-manifest.json";
+// @ts-ignore
 import handler from "./handler";
-
+// @ts-ignore
 import { serve } from "https://deno.land/std@0.139.0/http/server.ts";
+
+declare global {
+  const Deno: Record<string, any>;
+}
 
 serve(
   async request => {

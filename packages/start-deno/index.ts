@@ -5,11 +5,12 @@ import { spawn } from "child_process";
 import { copyFileSync } from "fs";
 import { dirname, join } from "path";
 import { rollup } from "rollup";
+import { Adapter } from "solid-start/vite";
 import { fileURLToPath } from "url";
-export default function () {
+export default function (): Adapter {
   return {
     name: "deno",
-    start(config, { port }) {
+    start(_config, { port }) {
       process.env.PORT = port;
       const proc = spawn(
         "deno",

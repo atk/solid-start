@@ -8,7 +8,7 @@ import sirv from "sirv";
 import { createRequest } from "solid-start/node/fetch.js";
 import { Readable } from "stream";
 
-global.onunhandledrejection = (err, promise) => {
+(global as any).onunhandledrejection = (err, promise) => {
   console.error(err);
   console.error(promise);
 };

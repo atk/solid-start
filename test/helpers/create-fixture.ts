@@ -9,7 +9,7 @@ import stripIndent from "strip-indent";
 import { fileURLToPath, pathToFileURL } from "url";
 import waitOn from "wait-on";
 
-import { createServer } from "solid-start-node/server.js";
+import { createServer } from "solid-start-node/server";
 import "solid-start/node/globals.js";
 import type { FetchEvent } from "solid-start/server/types.js";
 

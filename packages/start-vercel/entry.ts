@@ -1,9 +1,11 @@
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 import "solid-start/node/globals.js";
+// @ts-ignore
 import manifest from "../../.vercel/output/static/route-manifest.json";
+// @ts-ignore
 import entry from "./entry-server";
 
-
-export default async (req, res) => {
+export default async (req: VercelRequest, res: VercelResponse) => {
   console.log(`Received new request: ${req.url}`);
 
   let request = createRequest(req)
@@ -46,23 +48,18 @@ export default async (req, res) => {
  * Credits to the Remix team:
  * https://github.com/remix-run/remix/blob/main/packages/remix-netlify/server.ts
  */
-function createRequest(req) {
+function createRequest(req: VercelRequest) {
   let host = req.headers["x-forwarded-host"] || req.headers["host"];
   let protocol = req.headers["x-forwarded-proto"] || "https";
+  let url = new URL(req.url, `${protocol}://${host}`);
 
-  const params = new Proxy(new URLSearchParams(req.headers["x-now-route-matches"]), {
-    get: (searchParams, prop) => searchParams.get(prop),
-  })
-
-  const url = new URL(params.path, `${protocol}://${host}`);
-
-  let init = {
+  let init: RequestInit = {
     method: req.method,
     headers: createHeaders(req.headers)
   };
 
   if (req.method !== "GET" && req.method !== "HEAD") {
-    init.body = req;
+    init.body = req as any;
     init.duplex = 'half';
   }
 

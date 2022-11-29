@@ -1,8 +1,12 @@
+import { VercelRequest, VercelResponse } from "@vercel/node";
 import "solid-start/node/globals.js";
+// @ts-ignore
 import manifest from "../../.vercel/output/static/route-manifest.json";
+// @ts-ignore
 import entry from "./entry-server";
 
-export default async (req, res) => {
+
+export default async (req: VercelRequest, res: VercelResponse) => {
   console.log(`Received new request: ${req.url}`);
 
   let request = createRequest(req)
@@ -48,9 +52,14 @@ export default async (req, res) => {
 function createRequest(req) {
   let host = req.headers["x-forwarded-host"] || req.headers["host"];
   let protocol = req.headers["x-forwarded-proto"] || "https";
-  let url = new URL(req.url, `${protocol}://${host}`);
 
-  let init = {
+  const params = new Proxy(new URLSearchParams(req.headers["x-now-route-matches"]), {
+    get: (searchParams, prop: string) => searchParams.get(prop),
+  }) as URLSearchParams & Record<string, string | undefined>
+
+  const url = new URL(params.path, `${protocol}://${host}`);
+
+  let init: RequestInit = {
     method: req.method,
     headers: createHeaders(req.headers)
   };
@@ -63,7 +72,7 @@ function createRequest(req) {
   return new Request(url.href, init);
 }
 
-function createHeaders(requestHeaders) {
+function createHeaders(requestHeaders: Headers) {
   let headers = new Headers();
 
   for (let key in requestHeaders) {

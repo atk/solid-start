@@ -1,6 +1,8 @@
 import { createRequest } from "solid-start/node/fetch.js";
 import "solid-start/node/globals.js";
+//@ts-ignore
 import manifest from "../../dist/public/route-manifest.json";
+//@ts-ignore
 import handler from "./handler.js";
 
 const MAX_REDIRECTS = 10;

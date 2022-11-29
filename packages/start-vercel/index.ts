@@ -5,9 +5,18 @@ import { spawn } from "child_process";
 import { copyFileSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { rollup } from "rollup";
+import type { Adapter } from "solid-start/vite";
 import { fileURLToPath } from "url";
 
-export default function ({ edge, prerender } = {}) {
+export type VercelOptions = {
+  edge?: boolean;
+  prerender?: {
+    expiration?: string;
+    bypassToken?: string;
+  };
+};
+
+export default function ({ edge, prerender } = {} as VercelOptions): Adapter {
   return {
     name: "vercel",
     async start() {
